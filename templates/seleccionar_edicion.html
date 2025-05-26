@@ -1,29 +1,57 @@
-<!-- templates/seleccionar_edicion.html -->
+<!-- seleccionar_edicion.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Centro de Edición - Selección de Sede</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
 </head>
 <body>
-    <nav class="container">
-        <a href="{{ url_for('landing') }}">Inicio</a> |
-        <a href="{{ url_for('elegir_cuadre') }}">Volver</a>
-        <a href="{{ url_for('seleccionar_edicion') }}">Centro de Edición</a>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">
+                <span>Porkitos</span>
+            </div>
+            <div class="navbar-links">
+                <a href="{{ url_for('landing') }}">Inicio</a>
+                <a href="{{ url_for('elegir_cuadre') }}">Página Principal</a>
+                <a href="{{ url_for('seleccionar_edicion') }}">Centro de Edición</a>
+            </div>
+        </div>
     </nav>
 
-    <div class="container">
-        <h2>Centro de Edición de Datos</h2>
+    <h1 style="text-align:center; margin-top: 40px;">Centro de Edición de Datos</h1>
+    <h2 style="text-align:center; margin-bottom: 10px;">Selecciona la sede</h2>
+
+    <div class="region-select-container">
         <form method="POST">
-            <label for="local">Selecciona la sede:</label>
-            <select name="local" id="local" required>
-                <option value="Guadalupe">Guadalupe</option>
-                <option value="Villa Colombia">Villa Colombia</option>
-            </select>
-            <button type="submit">Ir al Centro de Edición</button>
+            <input type="hidden" name="local" value="Guadalupe">
+            <button type="submit" class="region-card fade-in" tabindex="0">
+                <img src="{{ url_for('static', filename='img/guadalupe.png') }}" alt="Guadalupe">
+                <h2>Guadalupe</h2>
+                <p>Editar datos de la sede Guadalupe</p>
+            </button>
+        </form>
+        <form method="POST">
+            <input type="hidden" name="local" value="Villa Colombia">
+            <button type="submit" class="region-card fade-in" tabindex="0">
+                <img src="{{ url_for('static', filename='img/villacolombia.png') }}" alt="Villa Colombia">
+                <h2>Villa Colombia</h2>
+                <p>Editar datos de la sede Villa Colombia</p>
+            </button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.region-card');
+            cards.forEach((card, i) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, 300 + i * 350);
+            });
+        });
+    </script>
 </body>
 </html>
+
