@@ -333,9 +333,6 @@ def obtener_campos_villa():
     except psycopg2.Error as err:
         return jsonify({"error": f"Error al describir la tabla: {err}"}), 500
 
-# Otras funciones como datos_porkitos, datos_villa y ejecutar_consulta también necesitan el mismo patrón
-# Si deseas que las reemplace por completo, dime y lo hago.
-
 @app.route('/logout')
 def logout():
     session.clear()
