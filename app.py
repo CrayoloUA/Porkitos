@@ -494,40 +494,5 @@ def datos_porkitos_villa():
 
 ...
 
-@app.route('/datos_actuales_villa')
-@login_required
-def datos_actuales_villa():
-    conn = get_db_connection('villa_colombia')
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("SELECT * FROM datos_porkitosVilla ORDER BY fecha DESC LIMIT 1;")
-    row = cursor.fetchone()
-    cursor.close()
-    conn.close()
-
-    if row:
-        data = {
-            'fechas': [row['fecha'].strftime('%Y-%m-%d') if hasattr(row['fecha'], 'strftime') else str(row['fecha'])],
-            'efectivo': [row['total_efectivo']],
-            'ventasDidi': [row['total_ventas_didi']],
-            'ventasQR': [row['total_ventas_qr']],
-            'egresos': [row['total_egresos']],
-            'ventaTotal': [row['total_ventas']],
-            'efectivoRestante': [row['efectivo_restante']],
-            'ventasAcumuladas': [row['total_ventas_hasta_el_momento']]
-        }
-    else:
-        data = {
-            'fechas': [],
-            'efectivo': [],
-            'ventasDidi': [],
-            'ventasQR': [],
-            'egresos': [],
-            'ventaTotal': [],
-            'efectivoRestante': [],
-            'ventasAcumuladas': []
-        }
-    return jsonify(data)
-
-
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
