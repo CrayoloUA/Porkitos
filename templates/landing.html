@@ -1,4 +1,3 @@
-<!-- landing.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -130,17 +129,32 @@
     .section-extended:nth-of-type(even) {
       background: #fff;
     }
-    .section-extended-content {
+    .side-image-content {
+      display: flex;
+      align-items: center;
+      gap: 40px;
       max-width: 900px;
       margin: 0 auto;
-      text-align: left;
+      width: 100%;
+      justify-content: center;
     }
-    .section-extended-content h2 {
+    .side-image-content.reverse {
+      flex-direction: row-reverse;
+    }
+    .side-img {
+      width: 320px;
+      max-width: 40vw;
+      border-radius: 24px;
+      box-shadow: 0 4px 32px rgba(117,53,123,0.10);
+      object-fit: cover;
+      background: #fff;
+    }
+    .side-image-content h2 {
       font-size: 2.4rem;
       color: var(--purple-hover);
       margin-bottom: 18px;
     }
-    .section-extended-content p {
+    .side-image-content p {
       font-size: 1.3rem;
       color: var(--secondary-color);
       max-width: 700px;
@@ -250,13 +264,17 @@
       .section-text h1 {
         font-size: 2.1rem;
       }
-      .section-extended-content h2 {
-        font-size: 1.5rem;
+      .side-image-content, .side-image-content.reverse {
+        flex-direction: column !important;
+        gap: 20px;
+        text-align: center;
       }
-      #modal-equipo .modal-content {
-        max-width: 95vw;
-        margin: 60px auto 0 auto;
-        padding: 18px 8px 12px 8px;
+      .side-img {
+        width: 90vw;
+        max-width: 98vw;
+      }
+      .side-image-content h2 {
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -275,56 +293,64 @@
       </div>
     </div>
   </nav>
-<main>
-  <section class="hero-blur-bg fade-in">
-    <div class="hero-content">
-      <div class="section-logo">
-        <img src="/static/logo.jpg" alt="Logo Porkitos">
+  <main>
+    <!-- HERO -->
+    <section class="hero-blur-bg fade-in">
+      <div class="hero-content">
+        <div class="section-logo">
+          <img src="/static/logo.jpg" alt="Logo Porkitos">
+        </div>
+        <div class="section-text">
+          <h1>Porkitos Control</h1>
+          <p>Monitorear y gestionar el cuadre diario de ventas en múltiples sedes de manera eficiente, automatizando procesos de registro, visualización de estadísticas y generación de reportes.</p>
+        </div>
       </div>
-      <div class="section-text">
-        <h1>Porkitos Control</h1>
-        <p>Monitorear y gestionar el cuadre diario de ventas en múltiples sedes de manera eficiente, automatizando procesos de registro, visualización de estadísticas y generación de reportes.</p>
+    </section>
+    <!-- Objetivo -->
+    <section class="section-extended fade-in">
+      <div class="side-image-content">
+        <img src="/static/img/Objetivo.jpg" alt="Objetivo" class="side-img">
+        <div>
+          <h2>Objetivo del Proyecto</h2>
+          <p>Monitorear y gestionar el cuadre diario de ventas en múltiples sedes de manera eficiente, facilitando la toma de decisiones contables mediante una plataforma centralizada de seguimiento financiero diario.</p>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Objetivo -->
-  <section class="section-extended fade-in">
-    <div class="side-image-content">
-      <img src="/static/img/Objetivo.jpg" alt="Objetivo" class="side-img">
-      <div>
-        <h2>Objetivo del Proyecto</h2>
-        <p>Monitorear y gestionar el cuadre diario de ventas en múltiples sedes de manera eficiente, facilitando la toma de decisiones contables mediante una plataforma centralizada de seguimiento financiero diario.</p>
+    </section>
+    <!-- Propósito -->
+    <section class="section-extended fade-in">
+      <div class="side-image-content reverse">
+        <img src="/static/img/Proposito.jpg" alt="Propósito" class="side-img">
+        <div>
+          <h2>Propósito General</h2>
+          <p>Facilitar la toma de decisiones contables mediante una plataforma centralizada de seguimiento financiero diario, brindando información clara y actualizada para la gestión empresarial.</p>
+        </div>
       </div>
-    </div>
-  </section>
-  <!-- Propósito -->
-  <section class="section-extended fade-in">
-    <div class="side-image-content">
-      <img src="/static/img/Proposito.jpg" alt="Propósito" class="side-img">
-      <div>
-        <h2>Propósito General</h2>
-        <p>Facilitar la toma de decisiones contables mediante una plataforma centralizada de seguimiento financiero diario, brindando información clara y actualizada para la gestión empresarial.</p>
+    </section>
+    <!-- Visión -->
+    <section class="section-extended fade-in">
+      <div class="side-image-content">
+        <img src="/static/img/Vision.jpg" alt="Visión" class="side-img">
+        <div>
+          <h2>Visión</h2>
+          <p>Convertirse en el sistema integral de control financiero para todas las sedes de Porkitos a nivel nacional, siendo referente en innovación y eficiencia en el sector.</p>
+        </div>
       </div>
-    </div>
-  </section>
-  <!-- Visión -->
-  <section class="section-extended fade-in">
-    <div class="side-image-content">
-      <img src="/static/img/Vision.jpg" alt="Visión" class="side-img">
-      <div>
-        <h2>Visión</h2>
-        <p>Convertirse en el sistema integral de control financiero para todas las sedes de Porkitos a nivel nacional, siendo referente en innovación y eficiencia en el sector.</p>
-      </div>
-    </div>
-  </section>
-</main>
+    </section>
+    <!-- Contacto -->
+    <section class="section-contact fade-in">
+      <h2>Contáctenos</h2>
+      <p>Juan Pablo Isaziga Benavides<br>Correo: jpisazigab@correo.usbcali.edu.co</p>
+      <p>Julian Andres Vargas Sepulveda<br>Correo: javargass@correo.usbcali.edu.co</p>
+      <p>Julian David Fuentes Granja<br>Correo: jdfuentesg@correo.usbcali.edu.co</p>
+      <p><br>Teléfono: +57 319 711 4369</p>
+    </section>
+  </main>
   <footer class="footer">
     Desarrollado por equipo 
     <span id="equipo-porkitos">Porkitos</span>
     &copy; 2025
   </footer>
-  <!-- Modal personalizado para mostrar el equipo -->
+  <!-- Modal -->
   <div id="modal-equipo">
     <div class="modal-content">
       <h3>Equipo de Desarrollo</h3>
