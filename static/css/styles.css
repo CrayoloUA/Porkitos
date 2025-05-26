@@ -1,0 +1,352 @@
+:root {
+    --primary: #75357b;
+    --secondary: #8780bf;
+    --accent: #538daf;
+    --success: #bff88d;
+    --warning: #b3bb11;
+    --navbar-bg: #fff;
+    --navbar-link: #75357b;
+    --navbar-link-hover: #fff;
+    --navbar-link-bg-hover: #75357b;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #22223b;
+    line-height: 1.6;
+    animation: fadeIn 1s ease-in;
+}
+
+/* ----------------- NAVBAR ----------------- */
+.navbar {
+    width: 100%;
+    background: var(--navbar-bg);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    padding: 1.1rem 0; /* Altura equilibrada */
+    margin-bottom: 30px;
+}
+
+.navbar-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-logo {
+    font-size: 1.6rem;
+    color: var(--primary);
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-logo img {
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 8px;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 1.7rem;
+}
+
+.navbar-links a {
+    color: var(--navbar-link);
+    font-weight: 500;
+    font-size: 1.08rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+    background: var(--navbar-link-bg-hover);
+    color: var(--navbar-link-hover);
+}
+
+/* ----------------- CONTENEDORES Y GENERAL ----------------- */
+.container, .login-container {
+    width: 90vw;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.container:hover, .login-container:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+h1, h2 {
+    color: var(--primary);
+    text-align: center;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2.2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--secondary);
+}
+
+input[type="text"], input[type="password"], input[type="date"], select {
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus, select:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+button {
+    padding: 12px 20px;
+    background-color: var(--primary);
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--secondary);
+    transform: translateY(-2px);
+}
+
+button:focus {
+    box-shadow: 0 0 0 4px rgba(83, 141, 175, 0.25);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+a:hover, a:focus {
+    color: var(--secondary);
+    text-decoration: underline;
+    transform: translateY(-2px);
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.results {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.results p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* ----------------- FOOTER ----------------- */
+.footer {
+    background: var(--secondary);
+    color: #fff;
+    padding: 18px 0;
+    margin-top: 40px;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* ----------------- MODAL EQUIPO ----------------- */
+#modal-equipo {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.45);
+}
+#modal-equipo .modal-content {
+    background: #fff;
+    color: #22223b;
+    max-width: 350px;
+    margin: 100px auto 0 auto;
+    padding: 28px 24px 20px 24px;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.20);
+    position: relative;
+    text-align: left;
+    animation: fadeInModal 0.4s;
+}
+#modal-equipo h3 {
+    margin-top: 0;
+    color: var(--primary);
+}
+#modal-equipo ul {
+    padding-left: 18px;
+    margin-top: 10px;
+    margin-bottom: 18px;
+}
+#modal-equipo button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    float: right;
+}
+#modal-equipo button:hover {
+    background: var(--accent);
+}
+@keyframes fadeInModal {
+    from { opacity:0; transform:scale(0.85);}
+    to { opacity:1; transform:scale(1);}
+}
+
+/* ----------------- ANIMACIONES GENERALES ----------------- */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* ----------------- TARJETAS DE SELECCIÓN DE LOCAL ----------------- */
+.region-select-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+}
+.region-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+    padding: 32px 36px 24px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s, opacity 0.7s;
+    min-width: 220px;
+    min-height: 220px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+}
+.region-card.visible {
+    opacity: 1;
+    transform: none;
+}
+.region-card:hover, .region-card:focus {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(155,77,202,0.18);
+    background: linear-gradient(135deg, #f4f5f6 80%, #9b4dca 100%);
+}
+.region-card img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 18px;
+}
+.region-card h2 {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+.region-card p {
+    color: var(--secondary);
+}
+
+/* ----------------- RESPONSIVE ----------------- */
+@media (max-width: 1100px) {
+    .navbar-content {
+        max-width: 98vw;
+    }
+}
+@media (max-width: 900px) {
+    .navbar-content {
+        max-width: 98vw;
+        padding: 0 10px;
+    }
+}
+@media (max-width: 700px) {
+    .navbar-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .navbar-links {
+        gap: 1rem;
+    }
+    .navbar-logo img {
+        height: 32px;
+    }
+    .navbar-logo {
+        font-size: 1.1rem;
+    }
+    .container, .login-container {
+        width: 95vw;
+        padding: 15px;
+    }
+    h1 {
+        font-size: 1.3rem;
+    }
+    h2 {
+        font-size: 1.1rem;
+    }
+    button, input[type="text"], input[type="password"], input[type="date"], select {
+        font-size: 14px;
+    }
+    .region-select-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+    #modal-equipo .modal-content {
+        max-width: 94vw;
+        margin: 60px auto 0 auto;
+        padding: 18px 8px 12px 8px;
+    }
+}

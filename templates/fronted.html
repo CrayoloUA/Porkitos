@@ -1,0 +1,125 @@
+<!-- fronted.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Insertar Datos Dinámicamente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+    <script>
+        async function obtenerCampos(tabla) {
+            if (!tabla) return;
+
+            const endpoint = "{{ local }}" === "villa colombia" ? '/obtener_campos_villa' : '/obtener_campos';
+            const respuesta = await fetch(`${endpoint}?tabla=${tabla}`);
+            const campos = await respuesta.json();
+
+            const contenedorCampos = document.getElementById('campos-form');
+            contenedorCampos.innerHTML = '';
+
+            campos.forEach(campo => {
+                if (campo === 'id' || campo === 'efectivo') return;
+
+                const label = document.createElement('label');
+                label.textContent = `Ingrese ${campo}:`;
+                label.setAttribute('for', `campo_${campo}`);
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = `campos[${campo}]`;
+                input.id = `campo_${campo}`;
+                input.required = true;
+
+                if (campo.includes('fecha')) input.type = 'date';
+                if (campo.includes('precio') || campo.includes('cantidad')) input.type = 'number';
+                if (campo.includes('email')) input.type = 'email';
+
+                contenedorCampos.appendChild(label);
+                contenedorCampos.appendChild(input);
+                contenedorCampos.appendChild(document.createElement('br'));
+            });
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">
+                <span>Porkitos</span>
+            </div>
+            <div class="navbar-links">
+                <a href="{{ url_for('landing') }}">Inicio</a>
+                <a href="{{ url_for('elegir_cuadre') }}">Página Principal</a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <h2>Insertar Datos en la Base de Datos {{ local }}</h2>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label for="tabla">Selecciona una tabla:</label><br>
+            <select name="tabla" id="tabla" required onchange="obtenerCampos(this.value)">
+                <option value="" disabled selected>Seleccione una tabla</option>
+                {% for tabla in tables %}
+                    <option value="{{ tabla }}">{{ tabla }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <div id="campos-form"></div><br>
+
+            <button type="submit">Insertar Datos</button>
+            {% if local == "Guadalupe" %}
+                <button type="button" onclick="window.location.href='/datos_porkitos'">Ir a DatosPorkitos</button>
+            {% else %}
+                <button type="button" onclick="window.location.href='/datos_porkitosVilla'">Ir a DatosPorkitos</button>
+            {% endif %}
+            <button type="button" onclick="window.location.href='/elegir_cuadre'">Volver a Selección</button>
+            <button type="button" onclick="window.location.href='/logout'">Cerrar Sesión</button>
+        </form>
+
+        {% if registros and tabla_seleccionada %}
+        <hr>
+        <h3>Registros en {{ tabla_seleccionada }}</h3>
+        <table>
+            <thead>
+                <tr>
+                    {% for columna in registros[0].keys() %}
+                        <th>{{ columna }}</th>
+                    {% endfor %}
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fila in registros %}
+                <tr>
+                    {% for valor in fila.values() %}
+                        <td>{{ valor }}</td>
+                    {% endfor %}
+                    <td>
+                        <form method="POST" action="{{ url_for('eliminar_registro', local=local, tabla=tabla_seleccionada, id=fila['id']) }}" style="display:inline">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                        <form method="GET" action="{{ url_for('editar_registro', local=local, tabla=tabla_seleccionada, id=fila['id']) }}" style="display:inline">
+                            <button type="submit">Editar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>

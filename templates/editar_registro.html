@@ -1,0 +1,38 @@
+<!-- templates/editar_registro.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Registro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">
+                <span>Porkitos</span>
+            </div>
+            <div class="navbar-links">
+                <a href="{{ url_for('landing') }}">Inicio</a>
+                <a href="{{ url_for('elegir_cuadre') }}">Página Principal</a>
+                <a href="{{ url_for('seleccionar_edicion') }}">Ir al Centro de Edición</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Editar Registro en {{ tabla }}</h2>
+        <form method="POST">
+            {% for i in range(columnas|length) %}
+                {% if columnas[i] != 'id' %}
+                    <label for="{{ columnas[i] }}">{{ columnas[i] }}:</label>
+                    <input type="text" name="{{ columnas[i] }}" id="{{ columnas[i] }}" value="{{ registro[columnas[i]] }}" required>
+                {% endif %}
+            {% endfor %}
+            <button type="submit">Guardar Cambios</button>
+            <a class="button" href="{{ url_for('fronted' if local == 'Guadalupe' else 'fronted_villa_colombia') }}">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

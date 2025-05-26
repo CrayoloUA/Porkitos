@@ -1,0 +1,143 @@
+<!-- datos_porkitosVilla.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuadre de Caja Villa Colombia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">
+                <span>Porkitos</span>
+            </div>
+            <div class="navbar-links">
+                <a href="{{ url_for('landing') }}">Inicio</a>
+                <a href="{{ url_for('elegir_cuadre') }}">Página Principal</a>
+                <a href="{{ url_for('seleccionar_edicion') }}">Ir al Centro de Edición</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Cuadre de Caja</h1>
+        <form method="POST">
+            <label for="fecha">Selecciona la fecha:</label>
+            <input type="date" id="fecha" name="fecha" value="{{ fecha_seleccionada }}" required>
+            <button type="submit">Generar Cuadre Villa Colombia</button>
+            <button type="button" onclick="window.location.href='/fronted_villa_colombia'">Volver</button>
+            <button type="button" onclick="window.location.href='/elegir_cuadre'">Página de Selección</button>
+            <button type="button" onclick="window.location.href='/logout'">Cerrar Sesión</button>
+        </form>
+        <div class="results">
+            <h2>Resultados</h2>
+            <!-- Valores escritos con IDs para JS -->
+            <p id="total-efectivo">Total efectivo: {{ "%.2f"|format(total_efectivo) }}</p>
+            <p id="total-ventas-didi">Total ventas Didi (Credito + Efectivo): {{ "%.2f"|format(total_ventas_didi) }}</p>
+            <p id="total-ventas-qr">Total ventas QR (Transferencia): {{ "%.2f"|format(total_ventas_qr) }}</p>
+            <p id="total-egresos">Total egresos del día: {{ "%.2f"|format(total_egresos) }}</p>
+            <p id="venta-total">Venta Total: {{ "%.2f"|format(total_ventas) }}</p>
+            <p id="efectivo-restante"><strong>Efectivo restante: {{ "%.2f"|format(efectivo_restante) }}</strong></p>
+            <p id="ventas-acumuladas"><strong>Ventas hasta el momento: {{ "%.2f"|format(total_ventas_hasta_el_momento) }}</strong></p>
+
+            <!-- Gráficas individuales -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+                <div class="chart-container">
+                    <canvas id="efectivoChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="ventasDidiChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="ventasQRChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="egresosChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="ventaTotalChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="efectivoRestanteChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="ventasAcumuladasChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const chartConfig = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { 
+                y: { 
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value.toLocaleString();
+                        }
+                    }
+                }
+            }
+        };
+
+        const charts = {
+            efectivo: crearChart('efectivoChart', 'Total efectivo', '#75357b'),
+            ventasDidi: crearChart('ventasDidiChart', 'Total ventas Didi', '#538daf'),
+            ventasQR: crearChart('ventasQRChart', 'Total ventas QR', '#b3bb11'),
+            egresos: crearChart('egresosChart', 'Total Egresos del Día', '#8780bf'),
+            ventaTotal: crearChart('ventaTotalChart', 'Venta Total', '#bff88d'),
+            efectivoRestante: crearChart('efectivoRestanteChart', 'Efectivo Restante', '#ff6b6b'),
+            ventasAcumuladas: crearChart('ventasAcumuladasChart', 'Ventas Hasta el Momento', '#4ecdc4')
+        };
+
+        function crearChart(id, label, color) {
+            return new Chart(document.getElementById(id), {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: label,
+                        data: [],
+                        borderColor: color,
+                        tension: 0.1
+                    }]
+                },
+                options: chartConfig
+            });
+        }
+
+        async function cargarDatosGraficos() {
+            try {
+                const response = await fetch('/datos_historicos?local={{ local }}');
+                const data = await response.json();
+
+                // Actualizar todas las gráficas
+                Object.keys(charts).forEach(key => {
+                    charts[key].data.labels = data.fechas;
+                    charts[key].data.datasets[0].data = data[key];
+                    charts[key].update();
+                });
+
+                // Actualizar los valores escritos con el dato más reciente (última fecha)
+                const last = data.fechas.length - 1;
+                document.getElementById('total-efectivo').textContent = 'Total efectivo: ' + (data.efectivo[last] || 0).toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
+                document.getElementById('total-ventas-didi').textContent = 'Total ventas Didi (Credito + Efectivo): ' + (data.ventasDidi[last] || 0).toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
+                document.getElementById('total-ventas-qr').textContent = 'Total ventas QR (Transferencia): ' + (data.ventasQR[last] || 0).toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
+                document.getElementById('total-egresos').textContent = 'Total egresos del día: ' + (data.egresos[last] || 0).toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
+                document.getElementById('venta-total').textContent = 'Venta Total: ' + (data.ventaTotal[last] || 0).toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
+                document.getElementById('efectivo-restante').innerHTML = '<strong>Efectivo restante: ' + (data.efectivoRestante[last] || 0).toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2}) + '</strong>';
+                document.getElementById('ventas-acumuladas').innerHTML = '<strong>Ventas hasta el momento: ' + (data.ventasAcumuladas[last] || 0).toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2}) + '</strong>';
+
+            } catch (error) {
+                console.error('Error cargando datos:', error);
+            }
+        }
+
+        cargarDatosGraficos();
+    </script>
+</body>
+</html>

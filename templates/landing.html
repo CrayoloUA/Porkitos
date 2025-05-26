@@ -1,0 +1,241 @@
+<!-- landing.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Porkitos Control - Landing</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    :root {
+      --primary: #75357b;
+      --secondary: #8780bf;
+      --accent: #538daf;
+      --success: #bff88d;
+      --warning: #b3bb11;
+      --navbar-bg: #fff;
+      --navbar-link: #75357b;
+      --navbar-link-hover: #fff;
+      --navbar-link-bg-hover: #75357b;
+    }
+    body {
+      background: #f7f7f7;
+    }
+    /* NAVBAR INVERTIDA */
+    .navbar {
+      width: 100%;
+      background: var(--navbar-bg);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      padding: 0.7rem 0;
+      margin-bottom: 30px;
+    }
+    .navbar-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar-logo {
+      font-size: 1.4rem;
+      color: var(--primary);
+      font-weight: bold;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .navbar-logo img {
+      height: 36px;
+      margin-right: 10px;
+      border-radius: 8px;
+    }
+    .navbar-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .navbar-links a {
+      color: var(--navbar-link);
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 4px 12px;
+      border-radius: 5px;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+    }
+    .navbar-links a:hover,
+    .navbar-links a.active {
+      background: var(--navbar-link-bg-hover);
+      color: var(--navbar-link-hover);
+    }
+    .logo-landing {
+      display: block;
+      margin: 0 auto 1.5rem auto;
+      max-width: 120px;
+      transition: transform 0.8s;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .footer {
+      background: var(--secondary);
+      color: #fff;
+      padding: 18px 0;
+      margin-top: 40px;
+      text-align: center;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    /* Modal estilos */
+    #modal-equipo {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.45);
+    }
+    #modal-equipo .modal-content {
+      background: #fff;
+      color: #22223b;
+      max-width: 350px;
+      margin: 100px auto 0 auto;
+      padding: 28px 24px 20px 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.20);
+      position: relative;
+      text-align: left;
+      animation: fadeInModal 0.4s;
+    }
+    #modal-equipo h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+    #modal-equipo ul {
+      padding-left: 18px;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+    #modal-equipo button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      float: right;
+    }
+    #modal-equipo button:hover {
+      background: var(--accent);
+    }
+    @keyframes fadeInModal {
+      from { opacity:0; transform:scale(0.85);}
+      to { opacity:1; transform:scale(1);}
+    }
+    @media (max-width: 700px) {
+      .navbar-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .navbar-links {
+        gap: 1rem;
+      }
+      .container {
+        padding: 10px !important;
+      }
+      .logo-landing {
+        max-width: 80px;
+      }
+      #modal-equipo .modal-content {
+        max-width: 94vw;
+        margin: 60px auto 0 auto;
+        padding: 18px 8px 12px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-logo">
+        <img src="/static/logo.jpg" alt="Logo Proyecto">
+        Porkitos Control
+      </div>
+      <div class="navbar-links">
+        <a href="{{ url_for('landing') }}">Inicio</a>
+        <a href="{{ url_for('elegir_cuadre') }}">Página Principal</a>
+        <a href="{{ url_for('seleccionar_edicion') }}">Ir al Centro de Edición</a>
+      </div>
+    </div>
+  </nav>
+  <main class="container" id="landing-content" style="margin-top: 40px;">
+    <section class="fade-in" id="logo-section">
+      <img src="/static/logo.jpg" alt="Logo Proyecto" class="logo-landing">
+    </section>
+    <section class="fade-in" id="title-section">
+      <h1 style="color: var(--primary);">Porkitos Control</h1>
+    </section>
+    <section class="fade-in" id="objective-section">
+      <p>Monitorear y gestionar el cuadre diario de ventas en múltiples sedes de manera eficiente, automatizando procesos de registro, visualización de estadísticas y generación de reportes.</p>
+    </section>
+    <section class="fade-in" id="purpose-section">
+      <h2>Propósito General</h2>
+      <p>Facilitar la toma de decisiones contables mediante una plataforma centralizada de seguimiento financiero diario.</p>
+    </section>
+    <section class="fade-in" id="vision-section">
+      <h2>Visión</h2>
+      <p>Convertirse en el sistema integral de control financiero para todas las sedes de Porkitos a nivel nacional.</p>
+    </section>
+    <section class="fade-in" id="contact-section">
+      <h2>Contáctenos</h2>
+      <p>Correo: contacto@porkitos.com<br>Teléfono: +57 300 123 4567</p>
+    </section>
+  </main>
+  <footer class="footer">
+    Desarrollado por equipo 
+    <span id="equipo-porkitos" style="cursor:pointer; color:#606c76; font-weight:bold;">
+      Porkitos
+    </span>
+    &copy; 2025
+  </footer>
+
+  <div id="modal-equipo">
+    <div class="modal-content">
+      <h3>Equipo de Desarrollo</h3>
+      <ul>
+        <li><b>Julian Andres Vargas Sepulveda</b> <a href="mailto:correo1@correo.usbcali.edu.co">correo1@correo.usbcali.edu.co</a></li>
+        <li><b>Juan Pablo Isaziga Benavides</b> <a href="mailto:correo2@correo.usbcali.edu.co">correo2@correo.usbcali.edu.co</a></li>
+        <li><b>Julian David Fuentes Granja</b> <a href="mailto:jdfuentesg@correo.usbcali.edu.co">jdfuentesg@correo.usbcali.edu.co</a></li>
+      </ul>
+      <button onclick="document.getElementById('modal-equipo').style.display='none';">
+        Cerrar
+      </button>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Fade-in animación para las secciones
+      const sections = document.querySelectorAll('.fade-in');
+      sections.forEach((section, i) => {
+        setTimeout(() => {
+          section.classList.add('visible');
+        }, i * 400);
+      });
+
+      // Evento para mostrar el modal del equipo
+      document.getElementById('equipo-porkitos').onclick = function() {
+        document.getElementById('modal-equipo').style.display = 'block';
+      };
+    });
+  </script>
+</body>
+</html>

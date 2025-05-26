@@ -1,0 +1,59 @@
+<!-- elegir_cuadre.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Local para Cuadre</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">
+                <span>Porkitos</span>
+            </div>
+            <div class="navbar-links">
+                <a href="{{ url_for('landing') }}">Inicio</a>
+                <a href="{{ url_for('elegir_cuadre') }}">Página Principal</a>
+                <a href="{{ url_for('seleccionar_edicion') }}">Ir al Centro de Edición</a>
+            </div>
+        </div>
+    </nav>
+
+    <h1 style="text-align:center; margin-top: 30px;">Seleccione el Local para hacer el Cuadre</h1>
+
+    <div class="region-select-container">
+        <!-- Tarjeta para Villa Colombia -->
+        <form method="POST" style="display:inline;">
+            <input type="hidden" name="local" value="Villa Colombia">
+            <button type="submit" class="region-card" tabindex="0">
+                <img src="{{ url_for('static', filename='img/villacolombia.png') }}" alt="Villa Colombia">
+                <h2>Villa Colombia</h2>
+                <p>Gestione el cuadre de la sede Villa Colombia</p>
+            </button>
+        </form>
+        <!-- Tarjeta para Guadalupe -->
+        <form method="POST" style="display:inline;">
+            <input type="hidden" name="local" value="Guadalupe">
+            <button type="submit" class="region-card" tabindex="0">
+                <img src="{{ url_for('static', filename='img/guadalupe.png') }}" alt="Guadalupe">
+                <h2>Guadalupe</h2>
+                <p>Gestione el cuadre de la sede Guadalupe</p>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Animación fade-in secuencial para las tarjetas
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.region-card');
+            cards.forEach((card, i) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, 300 + i * 350);
+            });
+        });
+    </script>
+</body>
+</html>

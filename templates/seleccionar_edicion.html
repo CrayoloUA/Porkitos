@@ -1,0 +1,28 @@
+<!-- templates/seleccionar_edicion.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Centro de Edición - Selección de Sede</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+</head>
+<body>
+    <nav class="container">
+        <a href="{{ url_for('landing') }}">Inicio</a> |
+        <a href="{{ url_for('elegir_cuadre') }}">Volver</a>
+    </nav>
+
+    <div class="container">
+        <h2>Centro de Edición de Datos</h2>
+        <form method="POST">
+            <label for="local">Selecciona la sede:</label>
+            <select name="local" id="local" required>
+                <option value="Guadalupe">Guadalupe</option>
+                <option value="Villa Colombia">Villa Colombia</option>
+            </select>
+            <button type="submit">Ir al Centro de Edición</button>
+        </form>
+    </div>
+</body>
+</html>

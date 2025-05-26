@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Centro de Edición</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">
+                <span>Porkitos</span>
+            </div>
+            <div class="navbar-links">
+                <a href="{{ url_for('landing') }}">Inicio</a>
+                <a href="{{ url_for('elegir_cuadre') }}">Página Principal</a>
+                <a href="{{ url_for('seleccionar_edicion') }}">Ir al Centro de Edición</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Editar cualquier tabla - {{ local }}</h2>
+
+        <form method="POST">
+            <label for="tabla">Selecciona una tabla:</label>
+            <select name="tabla" id="tabla" required>
+                {% for t in tablas %}
+                    <option value="{{ t }}" {% if tabla_seleccionada == t %}selected{% endif %}>{{ t }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Cargar Tabla</button>
+        </form>
+
+        {% if registros %}
+        <h3>Registros en {{ tabla_seleccionada }}</h3>
+        <table>
+            <thead>
+                <tr>
+                    {% for col in registros[0].keys() %}
+                        <th>{{ col }}</th>
+                    {% endfor %}
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fila in registros %}
+                <tr>
+                    {% for valor in fila.values() %}
+                        <td>{{ valor }}</td>
+                    {% endfor %}
+                    <td>
+                        <form method="POST" action="{{ url_for('eliminar_registro', local=local, tabla=tabla_seleccionada, id=fila['id']) }}" style="display:inline">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                        <form method="GET" action="{{ url_for('editar_registro', local=local, tabla=tabla_seleccionada, id=fila['id']) }}" style="display:inline">
+                            <button type="submit">Editar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
