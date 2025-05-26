@@ -112,7 +112,7 @@
 
         async function cargarDatosGraficos() {
             try {
-                const response = await fetch('/datos_historicos?local={{ local }}');
+                const response = await fetch('/datos_porkitosVilla?local={{ local }}');
                 const data = await response.json();
 
                 // Actualizar todas las gráficas
