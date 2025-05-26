@@ -452,3 +452,10 @@ form {
         font-size: 1.3rem;
     }
 }
+
+form:first-of-type .region-card {
+    margin-left: 220px;
+}
+form:last-of-type .region-card {
+    margin-right: 220px;
+}
